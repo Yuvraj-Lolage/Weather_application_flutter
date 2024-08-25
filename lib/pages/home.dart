@@ -11,13 +11,20 @@ class _HomeState extends State<Home> {
   Map<String, dynamic> data = {};
   @override
   Widget build(BuildContext context) {
-    data = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    data = data.isNotEmpty
+        ? data
+        : ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
 
     String background =
         data['isDaytime'] ? 'assets/day.jpg' : 'assets/night.jpg';
     Color textColor = !data['isDaytime']
         ? const Color.fromARGB(255, 232, 232, 232)
         : const Color.fromARGB(255, 18, 18, 18);
+
+    String message = data['isDaytime'] ? 'Good Morning..🌤️' : 'Good Night..🌙';
+    Color color = data['isDaytime']
+        ? Color.fromARGB(255, 94, 47, 0)
+        : const Color.fromARGB(255, 255, 255, 255);
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -36,7 +43,18 @@ class _HomeState extends State<Home> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton.icon(
-                      onPressed: () {},
+                      onPressed: () async {
+                        dynamic result =
+                            await Navigator.pushNamed(context, '/locations');
+                        setState(() {
+                          data = {
+                            'time': result['time'],
+                            'location': result['location'],
+                            'flagUrl': result['flagUrl'],
+                            'isDaytime': result['isDaytime']
+                          };
+                        });
+                      },
                       icon: const Icon(
                         Icons.location_on,
                         size: 30,
@@ -52,7 +70,7 @@ class _HomeState extends State<Home> {
               CircleAvatar(
                   radius: 100.0, backgroundImage: AssetImage(data['flagUrl'])),
               const SizedBox(
-                height: 60,
+                height: 20,
               ),
               Text(
                 data['time'],
@@ -61,11 +79,28 @@ class _HomeState extends State<Home> {
                     fontSize: 60.0,
                     fontWeight: FontWeight.bold,
                     color: textColor),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    color: const Color.fromARGB(68, 255, 255, 255),
+                    borderRadius: BorderRadius.circular(15)),
+                padding: const EdgeInsets.all(20.0),
+                width: double.infinity,
+                height: 250,
+                child: Text(
+                  message,
+                  style: TextStyle(
+                      fontSize: 22, fontWeight: FontWeight.bold, color: color),
+                ),
               )
             ],
           ),
         ),
       ),
+      // bottomNavigationBar:,
     );
   }
 }
