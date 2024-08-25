@@ -9,12 +9,17 @@ class ChooseLocation extends StatefulWidget {
 
 class _ChooseLocationState extends State<ChooseLocation> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Choose Location'),
       ),
-      body: Text('Choose_location Screen'),
+      body: const Text('Choose_location Screen'),
     );
   }
 }

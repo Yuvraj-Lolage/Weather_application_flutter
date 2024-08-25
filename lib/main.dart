@@ -4,8 +4,7 @@ import 'package:weather_application/pages/home.dart';
 import 'package:weather_application/pages/loading_screen.dart';
 
 void main() => runApp(MaterialApp(
-      initialRoute:
-          '/home', // used to specify which route used at initial state
+      initialRoute: '/', // used to specify which route used at initial state
       routes: {
         '/': (context) => const Loading(),
         '/home': (context) => const Home(),
