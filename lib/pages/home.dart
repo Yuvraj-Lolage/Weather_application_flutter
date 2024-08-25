@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -23,8 +24,13 @@ class _HomeState extends State<Home> {
 
     String message = data['isDaytime'] ? 'Good Morning..🌤️' : 'Good Night..🌙';
     Color color = data['isDaytime']
-        ? Color.fromARGB(255, 94, 47, 0)
+        ? const Color.fromARGB(255, 94, 47, 0)
         : const Color.fromARGB(255, 255, 255, 255);
+
+    Color navigationcolor = !data['isDaytime']
+        ? const Color.fromARGB(255, 10, 71, 92)
+        : const Color.fromARGB(255, 18, 85, 102);
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -100,7 +106,15 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
-      // bottomNavigationBar:,
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: navigationcolor,
+        items: const <Widget>[
+          Icon(Icons.watch_later, size: 30),
+          Icon(Icons.list, size: 30),
+          Icon(Icons.location_on, size: 30),
+        ],
+        onTap: (index) {},
+      ),
     );
   }
 }
