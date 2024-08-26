@@ -113,7 +113,20 @@ class _HomeState extends State<Home> {
           Icon(Icons.list, size: 30),
           Icon(Icons.location_on, size: 30),
         ],
-        onTap: (index) {},
+        onTap: (index) async {
+          if (index == 2) {
+            print('Your in Contacts page');
+            dynamic result = await Navigator.pushNamed(context, '/locations');
+            setState(() {
+              data = {
+                'time': result['time'],
+                'location': result['location'],
+                'flagUrl': result['flagUrl'],
+                'isDaytime': result['isDaytime']
+              };
+            });
+          }
+        },
       ),
     );
   }
